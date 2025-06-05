@@ -1,3 +1,5 @@
+__version__ = "0.0.1"
+
 from .camera import Camera
 from .game_object import GameObject
 from .worlds import ClosedWorld, OpenWorld

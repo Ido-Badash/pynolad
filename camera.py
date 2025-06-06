@@ -9,7 +9,7 @@ class Camera:
         width: int,
         height: int,
         target: GameObject = None,
-        smooth_speed: float = 200,
+        smooth_speed: float = 3,
     ):
         self.offset = pygame.Vector2(0, 0)
         self.target = target

@@ -18,14 +18,17 @@ class Camera:
         self.smooth_speed = smooth_speed
         self.rotation = 0.0  # degrees
 
-    def update(self):
+    def update(self, dt=None):
         if self.target:
             target_center = pygame.Vector2(self.target.rect.center)
             visible_w = self.width
             visible_h = self.height
             target_offset = target_center - pygame.Vector2(visible_w / 2, visible_h / 2)
             # Linear interpolation for smooth movement
-            self.offset += (target_offset - self.offset) * self.smooth_speed
+            speed = self.smooth_speed
+            if dt is not None:
+                speed *= dt
+            self.offset += (target_offset - self.offset) * speed
 
     def rotate(self, degrees: float):
         self.rotation = (self.rotation + degrees) % 360

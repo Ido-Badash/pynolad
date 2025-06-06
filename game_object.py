@@ -36,18 +36,18 @@ class GameObject:
                     print(f"Warning: Could not load image {path}: {e}")
                     # Fallback to a solid color if image loading fails for a frame
                     surface = pygame.Surface((width, height), pygame.SRCALPHA)
-                    surface.fill(color)
+                    surface.fill(self.color)
                     self.frames.append(surface)
             if (
                 not self.frames
             ):  # If no images loaded successfully, default to a single color frame
                 surface = pygame.Surface((width, height), pygame.SRCALPHA)
-                surface.fill(color)
+                surface.fill(self.color)
                 self.frames.append(surface)
         else:
             # Single frame of solid color if no image paths provided
             surface = pygame.Surface((width, height), pygame.SRCALPHA)
-            surface.fill(color)
+            surface.fill(self.color)
             self.frames.append(surface)
 
         self.frame_index = 0

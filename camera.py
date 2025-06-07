@@ -13,7 +13,7 @@ class Camera:
     ):
         self._x = 0
         self._y = 0
-        self.offset = pygame.Vector2(self.x, self.y)
+        self._offset = pygame.Vector2(self.x, self.y)
         self.target = target
         self.width = width
         self.height = height
@@ -31,6 +31,11 @@ class Camera:
             if dt is not None:
                 speed *= dt
             self.offset += (target_offset - self.offset) * speed
+            self.x = int(self.offset.x)
+            self.y = int(self.offset.y)
+        else:
+            # If no target keep the camera at its current position
+            self.offset = pygame.Vector2(self.x, self.y)
 
     def rotate(self, degrees: float):
         self.rotation = (self.rotation + degrees) % 360
@@ -53,7 +58,6 @@ class Camera:
     @x.setter
     def x(self, x: int):
         self._x = x
-        self.offset()
 
     @property
     def y(self):
@@ -62,17 +66,16 @@ class Camera:
     @y.setter
     def y(self, y: int):
         self._y = y
-        self.offset()
 
     @property
     def offset(self):
-        return self.offset
+        return self._offset
 
     @offset.setter
     def offset(self, offset: pygame.Vector2 = None):
         if offset is None:
-            self.offset = pygame.Vector2(self.x, self.y)
+            self._offset = pygame.Vector2(self.x, self.y)
             return
         x = self.x if offset[0] is None else offset[0]
         y = self.y if offset[1] is None else offset[1]
-        self.offset = pygame.Vector2(x, y)
+        self._offset = pygame.Vector2(x, y)

@@ -73,6 +73,6 @@ class Camera:
         if offset is None:
             self.offset = pygame.Vector2(self.x, self.y)
             return
-        x = self.x if offset[0] is None else x
-        y = self.y if offset[1] is None else y
+        x = self.x if offset[0] is None else offset[0]
+        y = self.y if offset[1] is None else offset[1]
         self.offset = pygame.Vector2(x, y)

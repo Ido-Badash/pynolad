@@ -12,6 +12,7 @@ class GameObject:
         animation_fps: int = 10,
         color: tuple[int, int, int] = (255, 255, 255),
         with_animation: bool = True,
+        outsider: bool = False,
     ):
         self.width = width
         self.height = height
@@ -22,6 +23,7 @@ class GameObject:
         self.velocity = pygame.Vector2(0, 0)
         self.angle = 0  # rotation angle in degrees
         self.with_animation = with_animation
+        self.outsider = outsider
 
         self.frames: list[pygame.Surface] = []
         if image_paths:

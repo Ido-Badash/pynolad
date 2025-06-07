@@ -24,5 +24,10 @@ class ClosedWorld(World):
         for obj in self.objects:
             obj.update(dt)
             # Clamp objects inside world bounds
-            obj.rect.clamp_ip(pygame.Rect(0, 0, self.width, self.height))
-            self.camera.update(dt) if self.camera_follow else None
+            # if the object is not an outsider
+            if not obj.outsider:
+                obj.rect.clamp_ip(pygame.Rect(0, 0, self.width, self.height))
+
+            # Cam follow if True
+            if self.camera_follow:
+                self.camera.update(dt)

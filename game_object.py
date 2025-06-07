@@ -64,9 +64,7 @@ class GameObject:
                 self._frame_index = (self._frame_index + 1) % len(self.frames)
                 self.animation_timer = 0.0
 
-        # Update mask to the current frame for collision detection
-        self.rect = self.current_frame.get_rect(topleft=self.rect.topleft)
-        self.mask = pygame.mask.from_surface(self.current_frame)
+        self._update_rect_and_mask()
 
     def draw(
         self,
@@ -74,12 +72,12 @@ class GameObject:
         camera_offset: tuple[int, int] = (0, 0),
         rotation: float = 0,  # Corrected parameter name from 'roatation'
     ):
-        # Get the current frame for drawing
-        frame = self.frames[self._frame_index]
 
         # Apply rotation (object's own rotation + external rotation)
         # Note: Pygame rotation is counter-clockwise, so -self.angle
-        rotated_image = pygame.transform.rotate(frame, -(self.angle + rotation))
+        rotated_image = pygame.transform.rotate(
+            self.current_frame, -(self.angle + rotation)
+        )
 
         # Calculate drawing position relative to camera and apply external rotation
         draw_pos = pygame.Vector2(self.rect.topleft) - camera_offset
@@ -115,8 +113,7 @@ class GameObject:
         else:
             raise ValueError("Axis must be 'x' or 'y'.")
 
-        # Update the mask after mirroring
-        self.mask = pygame.mask.from_surface(self.current_frame)
+        self._update_rect_and_mask()
 
     def get_frame(self, frame_idx: int) -> pygame.Surface:
         return self.frames[frame_idx % len(self.frames)]
@@ -127,6 +124,12 @@ class GameObject:
     @property
     def current_frame(self) -> pygame.Surface:
         return self.frames[self._frame_index]
+
+    @current_frame.setter
+    def current_frame(self, frame: pygame.Surface):
+        if self.frames:
+            self.frames[self._frame_index] = frame
+            self._update_rect_and_mask()
 
     @property
     def x(self):
@@ -143,3 +146,7 @@ class GameObject:
     @y.setter
     def y(self, y: int):
         self.rect.y = y
+
+    def _update_rect_and_mask(self):
+        self.rect = self.current_frame.get_rect(topleft=self.rect.topleft)
+        self.mask = pygame.mask.from_surface(self.current_frame)

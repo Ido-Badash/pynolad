@@ -11,8 +11,8 @@ class Camera:
         target: GameObject = None,
         smooth_speed: float = 3,
     ):
-        self.x = 0
-        self.y = 0
+        self._x = 0
+        self._y = 0
         self.offset = pygame.Vector2(self.x, self.y)
         self.target = target
         self.width = width
@@ -48,20 +48,20 @@ class Camera:
 
     @property
     def x(self):
-        return self.x
+        return self._x
 
     @x.setter
     def x(self, x: int):
-        self.x = x
+        self._x = x
         self.offset()
 
     @property
     def y(self):
-        return self.y
+        return self._y
 
     @y.setter
     def y(self, y: int):
-        self.y = y
+        self._y = y
         self.offset()
 
     @property

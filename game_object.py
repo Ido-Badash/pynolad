@@ -148,5 +148,5 @@ class GameObject:
         self.rect.y = y
 
     def _update_rect_and_mask(self):
-        self.rect = self.current_frame.get_rect(topleft=self.rect.topleft)
+        self.rect = self.current_frame.get_rect(topleft=(self.x, self.y))
         self.mask = pygame.mask.from_surface(self.current_frame)

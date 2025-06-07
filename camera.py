@@ -11,7 +11,9 @@ class Camera:
         target: GameObject = None,
         smooth_speed: float = 3,
     ):
-        self.offset = pygame.Vector2(0, 0)
+        self.x = 0
+        self.y = 0
+        self.offset = pygame.Vector2(self.x, self.y)
         self.target = target
         self.width = width
         self.height = height
@@ -38,3 +40,39 @@ class Camera:
 
     def detach(self):
         self.target = None
+
+    def set_pos_from_child(self, offset: tuple[int, int]):
+        x = self.target.x + offset[0]
+        y = self.target.y + offset[1]
+        self.offset = pygame.Vector2(x, y)
+
+    @property
+    def x(self):
+        return self.x
+
+    @x.setter
+    def x(self, x: int):
+        self.x = x
+        self.offset()
+
+    @property
+    def y(self):
+        return self.y
+
+    @y.setter
+    def y(self, y: int):
+        self.y = y
+        self.offset()
+
+    @property
+    def offset(self):
+        return self.offset
+
+    @offset.setter
+    def offset(self, offset: pygame.Vector2 = None):
+        if offset is None:
+            self.offset = pygame.Vector2(self.x, self.y)
+            return
+        x = self.x if offset[0] is None else x
+        y = self.y if offset[1] is None else y
+        self.offset = pygame.Vector2(x, y)

@@ -13,8 +13,6 @@ class GameObject:
         color: tuple[int, int, int] = (255, 255, 255),
         with_animation: bool = True,
     ):
-        self.x = x
-        self.y = y
         self.width = width
         self.height = height
         self.image_paths = image_paths if image_paths is not None else []
@@ -118,3 +116,19 @@ class GameObject:
 
         # Update the mask after mirroring
         self.mask = pygame.mask.from_surface(self.frames[self.frame_index])
+
+    @property
+    def x(self):
+        return self.rect.x
+
+    @x.setter
+    def x(self, x: int):
+        self.rect.x = x
+
+    @property
+    def y(self):
+        return self.rect.y
+
+    @y.setter
+    def y(self, y: int):
+        self.rect.y = y

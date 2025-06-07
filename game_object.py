@@ -23,7 +23,7 @@ class GameObject:
         self.angle = 0  # rotation angle in degrees
         self.with_animation = with_animation
 
-        self.frames = []
+        self.frames: list[pygame.Surface] = []
         if image_paths:
             for path in image_paths:
                 try:
@@ -48,11 +48,11 @@ class GameObject:
             surface.fill(self.color)
             self.frames.append(surface)
 
-        self.frame_index = 0
+        self._frame_index = 0
         self.animation_timer = 0.0
 
         # Initialize mask with the first frame
-        self.mask = pygame.mask.from_surface(self.frames[0])
+        self.mask = pygame.mask.from_surface(self.current_frame)
 
     def update(self, dt: float):
         self.rect.x += self.velocity.x * dt
@@ -61,11 +61,12 @@ class GameObject:
         if len(self.frames) > 1 and self.with_animation:
             self.animation_timer += dt
             if self.animation_timer >= 1 / self.animation_fps:
-                self.frame_index = (self.frame_index + 1) % len(self.frames)
+                self._frame_index = (self._frame_index + 1) % len(self.frames)
                 self.animation_timer = 0.0
 
         # Update mask to the current frame for collision detection
-        self.mask = pygame.mask.from_surface(self.frames[self.frame_index])
+        self.rect = self.current_frame.get_rect(topleft=self.rect.topleft)
+        self.mask = pygame.mask.from_surface(self.current_frame)
 
     def draw(
         self,
@@ -74,7 +75,7 @@ class GameObject:
         rotation: float = 0,  # Corrected parameter name from 'roatation'
     ):
         # Get the current frame for drawing
-        frame = self.frames[self.frame_index]
+        frame = self.frames[self._frame_index]
 
         # Apply rotation (object's own rotation + external rotation)
         # Note: Pygame rotation is counter-clockwise, so -self.angle
@@ -115,7 +116,17 @@ class GameObject:
             raise ValueError("Axis must be 'x' or 'y'.")
 
         # Update the mask after mirroring
-        self.mask = pygame.mask.from_surface(self.frames[self.frame_index])
+        self.mask = pygame.mask.from_surface(self.current_frame)
+
+    def get_frame(self, frame_idx: int) -> pygame.Surface:
+        return self.frames[frame_idx % len(self.frames)]
+
+    def set_frame(self, frame_idx: int, new_surface: pygame.Surface):
+        self.frames[frame_idx] = new_surface
+
+    @property
+    def current_frame(self) -> pygame.Surface:
+        return self.frames[self._frame_index]
 
     @property
     def x(self):

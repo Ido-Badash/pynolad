@@ -47,9 +47,8 @@ class Camera:
         self.target = None
 
     def set_pos_from_child(self, offset: tuple[int, int]):
-        x = self.target.x + offset[0]
-        y = self.target.y + offset[1]
-        self.offset = pygame.Vector2(x, y)
+        self.x = self.target.x + offset[0]
+        self.y = self.target.y + offset[1]
 
     @property
     def x(self):

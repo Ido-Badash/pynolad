@@ -47,8 +47,12 @@ class Camera:
         self.target = None
 
     def set_pos_from_child(self, offset: tuple[int, int]):
-        self.x = self.target.x + offset[0]
-        self.y = self.target.y + offset[1]
+        if self.target:
+            self.x = self.target.x + offset[0]
+            self.y = self.target.y + offset[1]
+        else:
+            self.x = offset[0]
+            self.y = offset[1]
 
     @property
     def x(self):

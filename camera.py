@@ -46,7 +46,11 @@ class Camera:
     def detach(self):
         self.target = None
 
-    def set_pos_from_child(self, offset: tuple[int, int]):
+    def set_pos(self, offset: tuple[int, int]):
+        """
+        This will not work if there is an active target,
+        Use the `detach` method so it will work
+        """
         if self.target:
             self.x = self.target.x + offset[0]
             self.y = self.target.y + offset[1]

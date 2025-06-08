@@ -96,6 +96,7 @@ class GameObject:
     def rotate(self, degrees: float):
         """Rotates the GameObject by the given degrees (updates its internal angle)."""
         self.angle = (self.angle + degrees) % 360
+        self._update_rect_and_mask()
 
     def collides_with(self, other: "GameObject") -> bool:
         """Performs pixel-perfect collision detection using masks."""

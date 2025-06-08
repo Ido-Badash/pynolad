@@ -39,6 +39,7 @@ class Camera:
 
     def rotate(self, degrees: float):
         self.rotation = (self.rotation + degrees) % 360
+        self.target._update_rect_and_mask()
 
     def attach(self, obj: GameObject):
         self.target = obj

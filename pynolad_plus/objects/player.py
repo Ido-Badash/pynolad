@@ -1,6 +1,8 @@
 import pygame
+
 import pynolad
-from objects.interactable import Interactable
+
+from .interactable import Interactable
 
 
 class Player(pynolad.GameObject):

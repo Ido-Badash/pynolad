@@ -1,6 +1,5 @@
 from typing import Callable
 
-import pygame
 import pynolad
 
 

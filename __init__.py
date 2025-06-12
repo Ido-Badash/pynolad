@@ -1,7 +1,7 @@
 __version__ = "0.2.0"
 
-from .animated_game_object import AnimatedGameObject
-from .camera import Camera
-from .game_object import GameObject
+from .animated_game_object import *
+from .camera import *
+from .game_object import *
 from .pynolad_plus import *
-from .worlds import ClosedWorld, OpenWorld
+from .worlds import *

@@ -5,7 +5,7 @@ import pynolad
 from .interactable import Interactable
 
 
-class Player(pynolad.GameObject):
+class Player(pynolad.AnimatedGameObject):
     def __init__(
         self,
         x: int,
